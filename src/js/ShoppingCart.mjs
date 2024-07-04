@@ -3,9 +3,10 @@ import { getLocalStorage } from "./utils.mjs";
 function productInCartTemplate(item, quant = 1) {
     const totalPrice = item.FinalPrice * quant;
     const newItemTemplate = `
-<li class="cart-card divider">
+<li class="cart-card__divider">
+    <p hidden class="grabListElement"></p>
     <a href="/product_pages/index.html?product=${item.Id}" class="cart-card__image">
-        <img src="${item.Image}" alt="${item.Name}"/>
+        <img src="${item.Images.PrimaryLarge}" alt="${item.Name}"/>
     </a>
     <a href="/product_pages/index.html/?product=${item.Id}">
         <h2 class="card__name">${item.Name}</h2>
@@ -14,12 +15,13 @@ function productInCartTemplate(item, quant = 1) {
     <div class="quantity-controller">
         <p hidden class="grabItemId">${item.Id}</p>
         <p hidden class="grabCategory">${item.Category}</p>
+        <p hidden class="grabPrice">${item.FinalPrice}</p>
         <button class="decrease-qty">-</button>
         <p>Quantity: </p>
         <span class="cart-card__quantity">${quant}</span>
-        <button class="increase-qty" id="addToCart">+</button>
+        <button class="increase-qty" data-product-id="${item.Id}" id="addToCart">+</button>
     </div>
-    <p class="cart-card__price">$${totalPrice}</p>
+    <p class="cart-card__price">$${totalPrice.toFixed(2)}</p>
 </li>
 `;
 return newItemTemplate;
@@ -45,9 +47,9 @@ export default class CartListing {
         this.key = key;
         this.parentElement = parentElement;
     }
-    renderCart() {
+    async renderCart() {
         if (!this.checkCartEmpty()) {
-            const cartItems = getLocalStorage(this.key);
+            const cartItems = await getLocalStorage(this.key);
             const cartHtml = checkDuplicates(cartItems);
             document.querySelector(this.parentElement).innerHTML = cartHtml;
         }
