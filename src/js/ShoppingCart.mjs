@@ -27,6 +27,7 @@ function productInCartTemplate(item, quant = 1) {
 return newItemTemplate;
 }
 
+//Checks if items are already in the cart to increase the quantity.
 function checkDuplicates(cart) {
     const updatedCart = [];
 
