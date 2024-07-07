@@ -60,6 +60,43 @@
       <section class="products">
         <h2>Review & Place your Order</h2>
       </section>
+      <section class="userinfo">
+        <form action="submit" method="post">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" name="name" required placeholder="First Name" />
+          
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" name="name" required placeholder="Last Name" />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="address">Street Address</label>
+          <input type="text" id="address" name="address" required placeholder="123 W Main St"/>
+
+          <label for="city">City</label>
+          <input type="text" id="city" name="city" required placeholder="Houston"/>
+
+          <label for="state">State</label>
+          <input type="text" id="state" name="state" required placeholder="TX" />
+
+          <label for="zip">Zip Code</label>
+          <input type="text" id="zip" name="zip" required placeholder="91051" />
+
+          <label for="ccnum">Credit Card Number</label>
+          <input type="text" id="ccnum" name="ccnum" required placeholder="1234-5678-9101-3341" />
+
+          <label for="exp">Expiration Date</label>
+          <input type="text" id="exp" name="exp" required placeholder="MM/YY" />
+
+          <label for="cc">Security Code</label>
+          <input type="text" id="cc" name="cc" required placeholder="123" />
+
+          <button type="submit">Submit</button>
+        </form>
+        <div class="ordersummary">
+        </div>
+      </section>
     </main>
 
     <footer>&copy;NOT a real business</footer>

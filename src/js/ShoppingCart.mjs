@@ -6,7 +6,7 @@ function productInCartTemplate(item, quant = 1) {
 <li class="cart-card__divider">
     <p hidden class="grabListElement"></p>
     <a href="/product_pages/index.html?product=${item.Id}" class="cart-card__image">
-        <img src="${item.Images.PrimaryLarge}" alt="${item.Name}"/>
+        <img src="${item.Images.PrimaryMedium}" alt="${item.Name}"/>
     </a>
     <a href="/product_pages/index.html/?product=${item.Id}">
         <h2 class="card__name">${item.Name}</h2>
@@ -43,6 +43,22 @@ function checkDuplicates(cart) {
     return updatedCart.map(cartItem => productInCartTemplate(cartItem, cartItem.quantity)).join("");
 }
 
+function renderCartTotal() {
+    const cartItems = getLocalStorage("so-cart");
+    var subtotal = 0;
+    var taxRate = .056;
+    cartItems.map((item) => {
+        subtotal += parseFloat(item.FinalPrice);
+    })
+    var taxedTotal = parseFloat(subtotal * taxRate).toFixed(2);
+    const totals = `
+    <p>Subtotal: $${subtotal.toFixed(2)}</p>
+    <p>Taxes: $${taxedTotal}</p>
+    <p>Total: $${(subtotal + parseFloat(taxedTotal)).toFixed(2)}</p>
+    `
+    document.querySelector(".totals").innerHTML = totals;
+}
+
 export default class CartListing {
     constructor(key, parentElement) {
         this.key = key;
@@ -52,7 +68,8 @@ export default class CartListing {
         if (!this.checkCartEmpty()) {
             const cartItems = await getLocalStorage(this.key);
             const cartHtml = checkDuplicates(cartItems);
-            document.querySelector(this.parentElement).innerHTML = cartHtml;
+            const cartTotal = renderCartTotal();
+            document.querySelector(this.parentElement).innerHTML = cartHtml, cartTotal;
         }
     }
     checkCartEmpty() {
