@@ -130,6 +130,10 @@ button {
   position: relative;
   text-align: center;
 }
+.empty {
+  text-align: center;
+  margin: 10px auto;
+}
 
 .cart svg {
   width: 25px;
@@ -304,7 +308,7 @@ button {
 .alert > p {
   margin: 0;
 }
-.alert-close {
+#alert-close {
   cursor: pointer;
 }
 

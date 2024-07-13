@@ -67,6 +67,7 @@ export default class CartListing {
     }
     async init() {
         const list = getLocalStorage(this.key);
+        this.checkCartEmpty();
         this.calculateListTotal(list);
         this.renderCart(list);
     }
@@ -86,7 +87,7 @@ export default class CartListing {
     checkCartEmpty() {
         const cartItems = getLocalStorage(this.key);
         if (!cartItems || cartItems.length === 0) {
-            document.querySelector(".product-list").innerHTML = "<h4>Your cart is empty!</h4>";
+            document.querySelector(".product-list").innerHTML = `<h4 class="empty">Your cart is empty!</h4>`;
             return true;
         }
         return false;
