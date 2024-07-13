@@ -264,6 +264,50 @@ button {
   grid-column: 3;
 }
 
+.checkout-form {
+  background-color: #525b0f;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1em;
+  margin: 1em auto;
+  max-width: 80%;
+  padding: 10px;
+}
+
+.checkout-form input {
+  padding: 0.5em;
+  border: 0;
+  border-radius: 5px;
+}
+.checkout-form button {
+  background-color: var(--primary-color);
+  color: rgb(0, 0, 0);
+  border: 0;
+  padding: 0.5em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.checkout-form button:hover {
+  background-color: var(--dark-grey);
+  color: white;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em;
+  background-color: var(--primary-color);
+  border: 1px solid darkorange;
+}
+.alert > p {
+  margin: 0;
+}
+.alert-close {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;

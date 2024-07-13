@@ -1,4 +1,4 @@
-import { appendToCart } from "./utils.mjs";
+import { appendToCart, alertMessage } from "./utils.mjs";
 
 function productDetailsTemplate(product) {
     return `
@@ -40,6 +40,7 @@ export default class ProductDetails {
     }
     addToCart() {
         appendToCart("so-cart", this.product);
+        alertMessage(`${this.product.NameWithoutBrand} has been added to cart!`, true, 2500);
     }
     renderProductDetails(selector) {
         const element = document.querySelector(selector);

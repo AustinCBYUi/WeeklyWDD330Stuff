@@ -43,33 +43,44 @@ function checkDuplicates(cart) {
     return updatedCart.map(cartItem => productInCartTemplate(cartItem, cartItem.quantity)).join("");
 }
 
-function renderCartTotal() {
-    const cartItems = getLocalStorage("so-cart");
-    var subtotal = 0;
-    var taxRate = .056;
-    cartItems.map((item) => {
-        subtotal += parseFloat(item.FinalPrice);
-    })
-    var taxedTotal = parseFloat(subtotal * taxRate).toFixed(2);
-    const totals = `
-    <p>Subtotal: $${subtotal.toFixed(2)}</p>
-    <p>Taxes: $${taxedTotal}</p>
-    <p>Total: $${(subtotal + parseFloat(taxedTotal)).toFixed(2)}</p>
-    `
-    document.querySelector(".totals").innerHTML = totals;
-}
+// function renderCartTotal() {
+//     const cartItems = getLocalStorage("so-cart");
+//     var subtotal = 0;
+//     var taxRate = .056;
+//     cartItems.map((item) => {
+//         subtotal += parseFloat(item.FinalPrice);
+//     })
+//     var taxedTotal = parseFloat(subtotal * taxRate).toFixed(2);
+//     const totals = `
+//     <p>Subtotal: $${subtotal.toFixed(2)}</p>
+//     <p>Taxes: $${taxedTotal}</p>
+//     <p>Total: $${(subtotal + parseFloat(taxedTotal)).toFixed(2)}</p>
+//     `
+//     document.querySelector(".totals").innerHTML = totals;
+// }
 
 export default class CartListing {
-    constructor(key, parentElement) {
+    constructor(key, parentSelector) {
         this.key = key;
-        this.parentElement = parentElement;
+        this.parentSelector = parentSelector;
+        this.total = 0;
+    }
+    async init() {
+        const list = getLocalStorage(this.key);
+        this.calculateListTotal(list);
+        this.renderCart(list);
+    }
+    calculateListTotal(list) {
+        const amounts = list.map((item) => item.FinalPrice);
+        this.total = amounts.reduce((sum, item) => sum + item);
     }
     async renderCart() {
         if (!this.checkCartEmpty()) {
-            const cartItems = await getLocalStorage(this.key);
+            const cartItems = getLocalStorage(this.key);
             const cartHtml = checkDuplicates(cartItems);
-            const cartTotal = renderCartTotal();
-            document.querySelector(this.parentElement).innerHTML = cartHtml, cartTotal;
+            const itemsInCart = cartItems.map((item) => productInCartTemplate(item));
+            document.querySelector(this.parentSelector).innerHTML = cartHtml, itemsInCart.join("");
+            document.querySelector(".list-total").innerText += `$${this.total.toFixed(2)}`;
         }
     }
     checkCartEmpty() {

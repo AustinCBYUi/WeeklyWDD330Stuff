@@ -1,7 +1,5 @@
 import { loadHeaderFooter, getLocalStorage } from "./utils.mjs";
 import ShoppingCart from "./ShoppingCart.mjs";
-import ProductData from "./ProductData.mjs";
-import ProductDetails from "./ProductDetails.mjs";
 
 loadHeaderFooter();
 
@@ -10,21 +8,19 @@ const cart = new ShoppingCart("so-cart", ".product-list");
 //Maybe this should be a part of checkout?
 //using the for loop worked really well, can't figure out how to
 //put new stuff in the cart and refresh the page.
-async function increaseQuantity(itemId, category) {
-    // for (let i = countOfItems; i <= countOfItems; i++) {
-        const dataSource = new ProductData(category);
-        const product = new ProductDetails(itemId, dataSource);
-        await product.updateProduct()
-    // }
-}
+// async function increaseQuantity(itemId, category) {
+//     // for (let i = countOfItems; i <= countOfItems; i++) {
+//         const dataSource = new ProductData(category);
+//         const product = new ProductDetails(itemId, dataSource);
+//         await product.updateProduct()
+//     // }
+// }
 
 async function htmlIncreaseDecrease(button, increment) {
     const quantityDisplay = button.parentNode.querySelector(".cart-card__quantity");
     const container = button.parentNode;
     const priceDisplay = container.parentNode.querySelector(".cart-card__price")
     const priceOfItem = button.parentNode.querySelector(".grabPrice");
-    const decreaseButton = button.parentNode.querySelector(".decrease-qty");
-    const increaseButton = button.parentNode.querySelector(".increase-qty");
     let currentQuantity = parseInt(quantityDisplay.textContent);
     let currentPrice = parseFloat(priceDisplay.textContent);
 
@@ -54,4 +50,4 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 });
 
-cart.renderCart();
+cart.init();
